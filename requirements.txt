@@ -1,0 +1,24 @@
+ipython==7.30.1
+numpy>=1.22.3,<2
+pandas>=1.4.2,<2
+scipy>=1.8.0,<2
+pydantic<2
+streamlit
+plotly
+blinker
+pytz-deprecation-shim
+pillow>=4.2.0
+protobuf<4
+importlib-metadata
+pandera==0.9.0
+click==7.1.2
+black==21.12b0
+conventions>=1.0.0
+owl>=1.4.0
+harpyeagle>=0.4.0
+pufferfish>=1.7.0,<2
+woodpecker>=0.5.2,<2
+data_preprocessing>=0.10.0
+vault>=1
+redis
+# pathos

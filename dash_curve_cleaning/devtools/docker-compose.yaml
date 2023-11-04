@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  redis:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+  dash:
+    build:
+      context: ../.
+    volumes:
+      - ../app:/app
+    ports:
+      - "8050:80"
+    env_file:
+      - .env

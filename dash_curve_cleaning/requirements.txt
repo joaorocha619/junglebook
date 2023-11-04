@@ -1,0 +1,11 @@
+pandas<2
+plotly<6
+dash<3
+pydantic<2
+redis<5
+furl<3
+uvicorn<1
+fastapi<1
+woodpecker<1
+plotly-resampler<1
+flask==2.1.3

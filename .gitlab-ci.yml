@@ -1,0 +1,47 @@
+.python:
+  image: "python:3.9"
+
+include:
+- project: 'jungleai/infra/gitlab-ci'
+  file:
+  - 'common.yml'
+  - 'python-common.yml'
+  - 'python-package.yml'
+  - 'docker-python.yml'
+
+docker hash:
+  extends: .kaniko-ecr
+  stage: build
+  except:
+  - tags
+  script:
+  - /kaniko/executor
+      --context $CI_PROJECT_DIR/dash_curve_cleaning
+      --dockerfile $CI_PROJECT_DIR/dash_curve_cleaning/Dockerfile
+      --destination $AWS_REPO:power-curves-cleaning-$CI_COMMIT_SHORT_SHA
+      --cache-repo $AWS_REPO/kaniko
+      --reproducible
+      --cache
+      --build-arg PIP_INDEX_URL=$PIP_INDEX_URL
+      --build-arg PIP_TRUSTED_HOST=$PIP_TRUSTED_HOST
+
+docker tags:
+  script:
+    - /kaniko/executor
+      --context $CI_PROJECT_DIR/dash_curve_cleaning
+      --dockerfile $CI_PROJECT_DIR/dash_curve_cleaning/Dockerfile
+      --destination $AWS_REPO:power-curves-cleaning-$CI_COMMIT_SHORT_SHA
+      --cache-repo $AWS_REPO/kaniko
+      --reproducible
+      --cache
+      --build-arg PIP_INDEX_URL=$PIP_INDEX_URL
+      --build-arg PIP_TRUSTED_HOST=$PIP_TRUSTED_HOST
+
+
+python test:
+  script:
+    - echo "Tests running for junglebook"
+    - pip install pytest
+    - pip install --upgrade pip
+    - pip install --use-deprecated=legacy-resolver -e .
+    - pytest
